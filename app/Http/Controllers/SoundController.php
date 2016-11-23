@@ -7,19 +7,23 @@ use Response;
 use App\User;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
+use Hash;
 
 class SoundController extends Controller
 {
     public function __construct(){
-      $this->middleware('jwt.auth');
+      $this->middleware('jwt.auth',['except' => ['signup']]);
     }
 
-    public function api1(){
-      if(!empty($_POST['dBr'])){
-        $dBr = $_POST['dBr'];
+    public function getVolumebydBr(){
+      $rawData = file_get_contents("php://input");
+      $obj =  json_decode($rawData);
+
+      if(!empty($obj->dBr)){
+        $dBr = $obj->dBr;
         if(0<=$dBr && $dBr<=84){
           header('Content-type: application/json');
-          return json_encode(array("score"=>"0.5"));
+          return json_encode(array("vol"=>"0.5"));
         }else{
           return false;
         }
@@ -33,13 +37,22 @@ class SoundController extends Controller
       $obj =  json_decode($rawData);
 
       $accountType = !empty($obj->accType) ? $obj->accType : "";
-      $name = !empty($obj->$name) ? $obj->$name : "";
+      $name = !empty($obj->name) ? $obj->name : "";
       $address = !empty($obj->add) ? $obj->add : "";
       $phone = !empty($obj->phone) ? $obj->phone : "";
       $email = !empty($obj->email) ? $obj->email : "";
       $accessType = !empty($obj->type) ? $obj->type : "";
+      $password = Hash::make($name);
 
-      return $username->username;
+      $user = User::create(['accountType'=>$accountType,
+                            'name'=>$name,
+                            'address'=>$address,
+                            'email'=>$email,
+                            'phone'=>$phone,
+                            'accessType'=>$accessType,
+                            'password'=>$password]);
+
+      return response()->json(compact('user'));
       die;
     }
 

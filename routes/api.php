@@ -18,12 +18,12 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:api');
 
 //Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
-Route::post('authenticate', 'AuthenticateController@authenticate');
+Route::post('signin', 'AuthenticateController@authenticate');
 Route::get('authenticate/user', 'AuthenticateController@getAuthenticatedUser');
-Route::post('/api1','SoundController@api1');
+Route::post('getVolumebydBr','SoundController@getVolumebydBr');
+Route::post('signup','SoundController@signup');
 
 Route::post('sound','SoundController@index');
-//Route::post('/signup','SoundController@login');
 
 Route::group(['middleware' => 'app'], function() {
 
