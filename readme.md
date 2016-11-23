@@ -1,27 +1,33 @@
-# Laravel PHP Framework
+## API with JWT for mobile app
 
-[![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
-[![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/v/stable.svg)](https://packagist.org/packages/laravel/framework)
-[![Latest Unstable Version](https://poser.pugx.org/laravel/framework/v/unstable.svg)](https://packagist.org/packages/laravel/framework)
-[![License](https://poser.pugx.org/laravel/framework/license.svg)](https://packagist.org/packages/laravel/framework)
+### Installation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, queueing, and caching.
+Clone the repository and install the Laravel vendor files
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
+	composer install
 
-## Official Documentation
+Set up your .env file with your database connection parameters then run the migrations and seed the database (need to turn on MySQL server)
 
-Documentation for the framework can be found on the [Laravel website](http://laravel.com/docs).
+	php artisan migrate
+	php artisan db:seed
 
-## Contributing
+### Usage
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](http://laravel.com/docs/contributions).
+In source code directory, use this command to start PHP's built-in development server:
 
-## Security Vulnerabilities
+	php artisan serve
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
 
-## License
+Open Postman extension to test the api
 
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+Using this url to get the token (method : POST)
+
+	http://localhost:8000/api/authenticate?email=superman@app.com&password=mypw
+
+Use the token received from previous step to check out user information via this url
+
+	http://localhost:8000/api/sound?token=...
+
+You need to replace "..." with your token
+
+#####Note that this source code is just a demo for token validation.
